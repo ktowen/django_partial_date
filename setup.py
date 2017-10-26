@@ -31,4 +31,8 @@ setup(
     keywords=['fields', 'django', 'dates', 'partial'],
 
     packages=['partial_date'],
+	
+    install_requires=[
+        'Django <2.0.0',
+    ],
 )
