@@ -25,6 +25,9 @@ class PartialDate(object):
     }
 
     def __init__(self, date, precision=DAY):
+        if isinstance(date, str):
+            date, precision =  PartialDate.parseDate(date)
+
         self.date = date
         self.precision = precision
 
@@ -51,6 +54,10 @@ class PartialDate(object):
     @precision.setter
     def precision(self, value):
         self._precision = value if value in (self.YEAR, self.MONTH, self.DAY) else self.DAY
+        if self._precision == self.MONTH:
+            self._date.replace(day=1)
+        if self._precision == self.YEAR:
+            self._date.replace(month=1, day=1)
 
     def precisionYear(self):
         return self.precision == self.YEAR
@@ -62,9 +69,9 @@ class PartialDate(object):
         return self.precision == self.DAY
 
     @staticmethod
-    def fromString(value):
+    def parseDate(value):
         """
-        Returns a PartialDate object from a string formatted as YYYY, YYYY-MM, YYYY-MM-DD.
+        Returns a tuple (datetime.date, precision) from a string formatted as YYYY, YYYY-MM, YYYY-MM-DD.
         """
         match = partial_date_re.match(value)
 
@@ -75,7 +82,7 @@ class PartialDate(object):
             precision = PartialDate.DAY if match_dict["day"] else \
                         PartialDate.MONTH if match_dict["month"] else \
                         PartialDate.YEAR
-            return PartialDate(datetime.date(**kw), precision)
+            return (datetime.date(**kw), precision)
         except (AttributeError, ValueError):
             raise exceptions.ValidationError(
                 _("'%(value)s' is not a valid date string (YYYY, YYYY-MM, YYYY-MM-DD)"),
@@ -108,7 +115,7 @@ class PartialDateField(models.Field):
             return value
 
         if isinstance(value, str):
-            return PartialDate.fromString(value)
+            return PartialDate(value)
 
         raise exceptions.ValidationError(
             _("'%(name)s' value must be a PartialDate instance, "
