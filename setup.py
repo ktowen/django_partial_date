@@ -9,13 +9,13 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='django-partial-date-field',
+    name='django_partial_date',
     version='1.0.0',
 
     description='Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD',
     long_description=long_description,
 
-    url='https://github.com/ktowen/django-partial-date-field',
+    url='https://github.com/ktowen/django_partial_date',
 
     author='ktowen',
     author_email='towenpa@gmail.com',
@@ -31,7 +31,7 @@ setup(
     keywords=['fields', 'django', 'dates', 'partial'],
 
     packages=['partial_date'],
-	
+
     install_requires=[
         'Django <2.0.0',
     ],

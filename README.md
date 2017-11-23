@@ -3,7 +3,8 @@ django-partial-date-field
 
 Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD
 
- `NOTE:` Works with DRF
+ * Works with DRF
+ * Supports comparison operations
 
 Usage
 ================
@@ -11,7 +12,7 @@ Usage
 install the package
 
 ```bash
-pip install django-partial-date-field
+pip install django_partial_date
 ```
 
 
