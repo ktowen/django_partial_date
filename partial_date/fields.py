@@ -89,6 +89,24 @@ class PartialDate(object):
                 params={'value': value}
             )
 
+    def __eq__(self, other):
+        if isinstance(other, PartialDate):
+            return self.date == other.date and self.precision == other.precision
+        else:
+            return NotImplemented
+
+    def __gt__(self, other):
+        if isinstance(other, PartialDate):
+            return self.__ge__(other) and not self.__eq__(other)
+        else:
+            return NotImplemented
+
+    def __ge__(self, other):
+        if isinstance(other, PartialDate):
+            return self.date >= other.date and self.precision >= other.precision
+        else:
+            return NotImplemented
+
 
 class PartialDateField(models.Field):
     """
