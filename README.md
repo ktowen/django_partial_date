@@ -1,4 +1,4 @@
-django-partial-date-field
+django_partial_date
 ================
 
 Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD
