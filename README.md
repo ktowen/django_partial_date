@@ -42,7 +42,7 @@ class TestModel(models.Model):
 >>> obj.save()
 >>> obj.some_partial_date
 '1995'
->>> obj.some_partial_date = PartialDate.fromString("1995-09")
+>>> obj.some_partial_date = PartialDate("1995-09")
 >>> obj.save()
 >>> obj.some_partial_date
 1995-09
@@ -50,7 +50,7 @@ class TestModel(models.Model):
 ```
 
 ```python
->>> from core.fields import PartialDate
+>>> from partial_date import PartialDate
 >>> import datetime
 >>> partial_date = PartialDate(datetime.date(2012, 9, 21), precision=PartialDate.DAY)
 >>> partial_date
@@ -70,7 +70,27 @@ True
 >>> partial_date.precision = PartialDate.MONTH
 >>> partial_date
 2012-09
->>> partial_date = PartialDate.fromString("2015-11-01")
+>>> partial_date = PartialDate("2015-11-01")
 >>> partial_date.date
 datetime.date(2015, 11, 1)
+```
+
+
+```python
+>>> from partial_date import PartialDate
+>>> partial_date = PartialDate("2015-11-01")
+>>> partial_date
+2015-11-01
+>>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+'11/01/2015'
+>>> partial_date = PartialDate("2015-11")
+>>> partial_date
+2015-11
+>>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+'11/2015'
+>>> partial_date = PartialDate("2015")
+>>> partial_date
+2015
+>>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+'2015'
 ```

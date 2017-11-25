@@ -52,3 +52,9 @@ class PartialDateTestCase(TestCase):
         self.assertFalse(PartialDate("2001") <= PartialDate("2000"))
         self.assertFalse(PartialDate("2000-01") <= PartialDate("2000"))
         self.assertTrue(PartialDate("2000-01") <= PartialDate("2000-01-01"))
+
+    def test_format(self):
+        format = ('%Y', '%m/%Y', '%m/%d/%Y')
+        self.assertEqual(PartialDate("2000-03-04").format(*format), "03/04/2000")
+        self.assertEqual(PartialDate("2000-03").format(*format), "03/2000")
+        self.assertEqual(PartialDate("2000").format(*format), "2000")

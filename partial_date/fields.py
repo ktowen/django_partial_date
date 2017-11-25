@@ -34,6 +34,15 @@ class PartialDate(object):
     def __repr__(self):
         return "" if not self._date else self._date.strftime(self.DATE_FORMATS[self._precision])
 
+    def format(self, precision_year=None, precision_month=None, precision_day=None):
+        if self.precisionYear():
+            format = precision_year
+        elif self.precisionMonth():
+            format = precision_month
+        else:
+            format = precision_day
+        return "" if not self._date else self._date.strftime(format)
+
     @property
     def date(self):
         return self._date
