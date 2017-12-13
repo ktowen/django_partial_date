@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='django_partial_date',
-    version='1.1.0',
+    version='1.2.0',
 
     description='Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD',
     long_description=long_description,
