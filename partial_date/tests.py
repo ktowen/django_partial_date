@@ -1,6 +1,10 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from datetime import date
 from django.test import TestCase
 from partial_date import PartialDate, PartialDateField
+
 
 class PartialDateTestCase(TestCase):
     def test_init_with_string(self):
