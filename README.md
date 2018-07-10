@@ -94,3 +94,6 @@ datetime.date(2015, 11, 1)
 >>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
 '2015'
 ```
+Thanks for their collaborations to
+- lorinkoz
+- howieweiner
