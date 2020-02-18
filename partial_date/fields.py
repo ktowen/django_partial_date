@@ -5,8 +5,8 @@ import re
 
 from django.core import  exceptions
 from django.db import models
-from django.utils import six
 from django.utils.translation import ugettext_lazy as _
+import six
 
 
 partial_date_re = re.compile(

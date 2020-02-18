@@ -5,6 +5,7 @@ Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM
 
  * Works with DRF
  * Supports comparison operations
+ * Supports Django 3.0
 
 Usage
 ================
@@ -97,3 +98,4 @@ datetime.date(2015, 11, 1)
 Thanks for their collaborations to
 - lorinkoz
 - howieweiner
+- jghyllebert

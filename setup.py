@@ -33,6 +33,7 @@ setup(
     packages=['partial_date'],
 
     install_requires=[
+        'six',
         'django',
     ],
 )
