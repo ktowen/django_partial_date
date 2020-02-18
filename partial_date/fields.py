@@ -132,7 +132,7 @@ class PartialDateField(models.Field):
     def get_internal_type(self):
         return "DateTimeField"
 
-    def from_db_value(self, value, expression, connection, context):
+    def from_db_value(self, value, expression, connection, context=None):
         if value is None:
             return value
         return PartialDate(value.date(), value.second)
