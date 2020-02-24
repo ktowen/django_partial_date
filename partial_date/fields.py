@@ -2,16 +2,17 @@
 from __future__ import unicode_literals
 import datetime
 import re
+import six
 
-from django.core import  exceptions
+from django.core import exceptions
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-import six
 
 
 partial_date_re = re.compile(
-    r'^(?P<year>\d{4})(?:-(?P<month>\d{1,2}))?(?:-(?P<day>\d{1,2}))?$'
+    r"^(?P<year>\d{4})(?:-(?P<month>\d{1,2}))?(?:-(?P<day>\d{1,2}))?$"
 )
+
 
 class PartialDate(object):
     YEAR = 0
@@ -21,21 +22,21 @@ class PartialDate(object):
     _date = None
     _precision = None
 
-    DATE_FORMATS = {
-        YEAR: '%Y',
-        MONTH: '%Y-%m',
-        DAY: '%Y-%m-%d'
-    }
+    DATE_FORMATS = {YEAR: "%Y", MONTH: "%Y-%m", DAY: "%Y-%m-%d"}
 
     def __init__(self, date, precision=DAY):
         if isinstance(date, six.text_type):
-            date, precision =  PartialDate.parseDate(date)
+            date, precision = PartialDate.parseDate(date)
 
         self.date = date
         self.precision = precision
 
     def __repr__(self):
-        return "" if not self._date else self._date.strftime(self.DATE_FORMATS[self._precision])
+        return (
+            ""
+            if not self._date
+            else self._date.strftime(self.DATE_FORMATS[self._precision])
+        )
 
     def format(self, precision_year=None, precision_month=None, precision_day=None):
         if self.precisionYear():
@@ -54,8 +55,7 @@ class PartialDate(object):
     def date(self, value):
         if not isinstance(value, datetime.date):
             raise exceptions.ValidationError(
-                _("%(value)s is not datetime.date instance"),
-                params={'value': value},
+                _("%(value)s is not datetime.date instance"), params={"value": value}
             )
         self._date = value
 
@@ -65,7 +65,9 @@ class PartialDate(object):
 
     @precision.setter
     def precision(self, value):
-        self._precision = value if value in (self.YEAR, self.MONTH, self.DAY) else self.DAY
+        self._precision = (
+            value if value in (self.YEAR, self.MONTH, self.DAY) else self.DAY
+        )
         if self._precision == self.MONTH:
             self._date.replace(day=1)
         if self._precision == self.YEAR:
@@ -91,14 +93,18 @@ class PartialDate(object):
             match_dict = match.groupdict()
             kw = {k: int(v) if v else 1 for k, v in six.iteritems(match_dict)}
 
-            precision = PartialDate.DAY if match_dict["day"] else \
-                        PartialDate.MONTH if match_dict["month"] else \
-                        PartialDate.YEAR
+            precision = (
+                PartialDate.DAY
+                if match_dict["day"]
+                else PartialDate.MONTH
+                if match_dict["month"]
+                else PartialDate.YEAR
+            )
             return (datetime.date(**kw), precision)
         except (AttributeError, ValueError):
             raise exceptions.ValidationError(
                 _("'%(value)s' is not a valid date string (YYYY, YYYY-MM, YYYY-MM-DD)"),
-                params={'value': value}
+                params={"value": value},
             )
 
     def __eq__(self, other):
@@ -148,15 +154,19 @@ class PartialDateField(models.Field):
             return PartialDate(value)
 
         raise exceptions.ValidationError(
-            _("'%(name)s' value must be a PartialDate instance, "
+            _(
+                "'%(name)s' value must be a PartialDate instance, "
                 "a valid partial date string (YYYY, YYYY-MM, YYYY-MM-DD) "
-                "or None, not '%(value)s'"),
-            params={'name': self.name, 'value': value},
+                "or None, not '%(value)s'"
+            ),
+            params={"name": self.name, "value": value},
         )
 
     def get_prep_value(self, value):
-        if value in (None, ''):
+        if value in (None, ""):
             return None
         partial_date = self.to_python(value)
         date = partial_date.date
-        return datetime.datetime(date.year, date.month, date.day, second=partial_date.precision)
+        return datetime.datetime(
+            date.year, date.month, date.day, second=partial_date.precision
+        )
