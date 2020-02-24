@@ -13,6 +13,7 @@ setup(
     version="1.2.2",
     description="Django custom model field for partial dates with the form YYYY, YYYY-MM, YYYY-MM-DD",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="https://github.com/ktowen/django_partial_date",
     author="ktowen",
     author_email="towenpa@gmail.com",
