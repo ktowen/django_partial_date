@@ -53,48 +53,49 @@ class TestModel(models.Model):
 ```python
 >>> from partial_date import PartialDate
 >>> import datetime
->>> partial_date = PartialDate(datetime.date(2012, 9, 21), precision=PartialDate.DAY)
->>> partial_date
+>>> partial_date_instance = PartialDate(datetime.date(2012, 9, 21), precision=PartialDate.DAY)
+>>> partial_date_instance
 2012-09-21
->>> partial_date.precisionYear()
+>>> partial_date_instance.precisionYear()
 False
->>> partial_date.precisionMonth()
+>>> partial_date_instance.precisionMonth()
 False
->>> partial_date.precisionDay()
+>>> partial_date_instance.precisionDay()
 True
->>> partial_date.precision == PartialDate.YEAR
+>>> partial_date_instance.precision == PartialDate.YEAR
 False
->>> partial_date.precision == PartialDate.MONTH
+>>> partial_date_instance.precision == PartialDate.MONTH
 False
->>> partial_date.precision == PartialDate.DAY
+>>> partial_date_instance.precision == PartialDate.DAY
 True
->>> partial_date.precision = PartialDate.MONTH
->>> partial_date
+>>> partial_date_instance.precision = PartialDate.MONTH
+>>> partial_date_instance
 2012-09
->>> partial_date = PartialDate("2015-11-01")
->>> partial_date.date
+>>> partial_date_instance = PartialDate("2015-11-01")
+>>> partial_date_instance.date
 datetime.date(2015, 11, 1)
 ```
 
 
 ```python
 >>> from partial_date import PartialDate
->>> partial_date = PartialDate("2015-11-01")
->>> partial_date
+>>> partial_date_instance = PartialDate("2015-11-01")
+>>> partial_date_instance
 2015-11-01
->>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+>>> partial_date_instance.format('%Y', '%m/%Y', '%m/%d/%Y') # .format(precision_year, precision_month, precision_day)
 '11/01/2015'
->>> partial_date = PartialDate("2015-11")
->>> partial_date
+>>> partial_date_instance = PartialDate("2015-11")
+>>> partial_date_instance
 2015-11
->>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+>>> partial_date_instance.format('%Y', '%m/%Y', '%m/%d/%Y')
 '11/2015'
->>> partial_date = PartialDate("2015")
->>> partial_date
+>>> partial_date_instance = PartialDate("2015")
+>>> partial_date_instance
 2015
->>> partial_date.format('%Y', '%m/%Y', '%m/%d/%Y')
+>>> partial_date_instance.format('%Y', '%m/%Y', '%m/%d/%Y')
 '2015'
 ```
+
 Thanks for their collaborations to
 - lorinkoz
 - howieweiner
